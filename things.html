@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div style="
+		margin: 0;
+		padding: 0;
+	    overflow: hidden;
+	    background-color: #fff;
+	    position: fixed;
+	    top: 0;
+	    width: 100%;">
+	  Year: <input type="text" id="textField">
+	  <button type="button" id="enter">enter</button>
+	  <button type="button" id="clear">clear</button>
+	  <button type="button" id="previous">previous</button>
+	  <button type="button" id="next">next</button>
+	</div>
+	<br>
+	<div id="stuff"></div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+	var glob = 2005;
+	display(glob);
+
+	$('#clear').click(function() {
+	 	clear();
+	});
+
+	$('#enter').click(function() {
+		clear();
+		var year = $('#textField').val();
+		glob = year;
+		display(year);
+	});
+
+	$('#previous').click(function() {
+		clear();
+		display(--glob);
+	});
+
+	$('#next').click(function() {
+		clear();
+		display(++glob);
+	});
+	
+	function clear() {
+
+		console.log("wat");
+		$("#stuff").empty();
+
+        return false;
+	}
+
+	function display(year) {
+
+		$('#textField').val(year);
+		
+		if (year < 2015 && year > 2004) {
+
+			var offset = (year - 2004) * 1000;
+
+			var imgs = [];
+
+			for(var i = offset; i<1000+offset; i++) {
+
+				imgs.push(i);
+
+				var r= $('<a href="http://www.gagsnetwork.com/data/videos/NF/' + year + '/' + i + '.mp4"><img src="http://www.gagsnetwork.com/data/videos/NF/Img/' + year + '/' + i + '_sm.jpg" style="width: 256px; height:144px;" alt=""></a>');
+		        $("#stuff").append(r);
+
+			}
+
+			for(var i = offset; i<1000+offset; i++) {
+
+				if (!imgs.includes(i)){
+					imgs.push(i);
+					var r= $('<a href="http://www.gagsnetwork.com/data/videos/NF/' + year + '/' + i + '.mp4"><img src="http://www.gagsnetwork.com/data/videos/NF/Img/' + year + '/' + i + '.jpg" style="width: 256px; height:144px;" alt=""></a>');
+			        $("#stuff").append(r);
+			    }
+
+			}
+
+		}
+
+		return false;
+	}
+
+
+</script>
+</html>
