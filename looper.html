@@ -1,0 +1,81 @@
+<div>
+    URL: <input type="text" id="url">
+    <button type="button" id="enter" onclick="updateVideo()">enter</button>
+</div>
+
+<div>
+    <video id="vid" autoplay muted>
+        <source id="source" src="https://gagsnetwork.com/data/videos/NF/2013/9023.mp4#t=62"  type="video/mp4">
+    </video>
+</div>
+
+<div>
+    start time: <input type="text" id="start">
+    <button type="button" id="start_left" onclick="startSub()">-</button>
+    <button type="button" id="start_right" onclick="startAdd()">+</button>
+</div>
+<div>
+    end time: <input type="text" id="end">
+    <button type="button" id="end_left" onclick="endSub()">-</button>
+    <button type="button" id="end_right" onclick="endAdd()">+</button>
+</div>
+
+<script>
+    var current_start = 62
+    var current_end = 63.2
+
+    var start_field = document.getElementById("start")
+    var end_field = document.getElementById("end")
+    var url_field = document.getElementById("url")
+
+    start_field.value = current_start
+    end_field.value = current_end
+
+    start_field.addEventListener("input", (event) => {
+        var num = parseFloat(event.target.value)
+        if (!isNaN(num)) {
+            current_start = num
+        }
+    });
+
+    end_field.addEventListener("input", (event) => {
+        var num = parseFloat(event.target.value)
+        if (!isNaN(num)) {
+            current_end = num
+        }
+    });
+
+
+    document.getElementById("vid").addEventListener("timeupdate",function() {
+        v = document.getElementById("vid");
+        if (v.currentTime < current_start || v.currentTime > current_end) {
+            v.currentTime = current_start;
+        }
+    })
+
+    function updateVideo() {
+        document.getElementById("source").setAttribute("src", url_field.value)
+        document.getElementById("vid").load()
+        document.getElementById("vid").play()
+    }
+
+    function startAdd() {
+        current_start += 0.1
+        start_field.value = current_start
+    }
+
+    function startSub() {
+        current_start -= 0.1
+        start_field.value = current_start
+    }
+
+    function endAdd() {
+        current_end += 0.1
+        end_field.value = current_end
+    }
+
+    function endSub() {
+        current_end -= 0.1
+        end_field.value = current_end
+    }
+</script>
